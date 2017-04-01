@@ -1,0 +1,13 @@
+{
+  "pages":[
+    "pages/index/index"
+  ],
+  "window":{
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#000",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "PhotoFrames",
+    "navigationBarTextStyle": "#fff"
+  },
+  "debug": true
+}

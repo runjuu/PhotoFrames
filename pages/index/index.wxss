@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  height: 100%;
+  width: 100%;
+}
+
+.frames {
+  flex: initial;
+  width: 750rpx;
+  height: 750rpx;
+  background: #fff;
+}
+
+.selectImage {
+  position: absolute;
+  bottom: 0;
+}

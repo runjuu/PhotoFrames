@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+  <view
+    bindtap="selectImage"
+    bindlongtap="previewImage"
+  >
+    <canvas
+      class="frames"
+      canvas-id="frames"
+    />
+  </view>
+</view>
