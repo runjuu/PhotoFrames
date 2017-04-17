@@ -1,34 +1,35 @@
 const {
   methods: {
     canvasToTempFilePath,
-    getSystemInfo,
     chooseImage,
     previewImage,
     drawPhotos,
   },
+  magnification,
 } = getApp();
 
 Page({
+
   data: {
-    ctx: undefined,
+    frames: undefined,
+    preview: undefined,
     systemInfo: wx.getSystemInfoSync(),
   },
-  
+
   onReady() {
     this.setData({
-      ctx: wx.createCanvasContext('frames'),
+      frames: wx.createCanvasContext('frames'),
+      preview: wx.createCanvasContext('preview'),
     });
   },
-  
+
   selectImage() {
-    const { ctx, systemInfo } = this.data;
+    const { frames, preview, systemInfo } = this.data;
     chooseImage()
-    .then((image) => {
-      drawPhotos({ image, ctx, systemInfo })
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((image) => {
+        drawPhotos(frames, { image, systemInfo, magnification });
+        drawPhotos(preview, { image, systemInfo, magnification: 1 });
+      });
   },
 
   previewImage() {
@@ -36,7 +37,6 @@ Page({
     .then((path) => {
       previewImage({ current: path });
     });
-  }
-  
+  },
 
-})
+});

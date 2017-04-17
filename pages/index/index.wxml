@@ -8,5 +8,9 @@
       class="frames"
       canvas-id="frames"
     />
+    <canvas
+      class="preview"
+      canvas-id="preview"
+    />
   </view>
 </view>

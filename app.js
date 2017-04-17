@@ -5,10 +5,11 @@ const utils = require('./utils/index');
 App({
   utils,
   methods,
+  magnification: 5,
   onError(err) {
     wx.showModal({
       title: '！！！',
       content: JSON.stringify(err),
     })
   },
-})
+});

@@ -8,13 +8,20 @@
 }
 
 .frames {
+  position: absolute;
+  left: 0;
+  right: 0;
+  flex: initial;
+  width: 3750rpx;
+  height: 3750rpx;
+  background: #fff;
+  transform: translate(-100%, -100%);
+  pointer-events: none
+}
+
+.preview {
   flex: initial;
   width: 750rpx;
   height: 750rpx;
   background: #fff;
-}
-
-.selectImage {
-  position: absolute;
-  bottom: 0;
 }
