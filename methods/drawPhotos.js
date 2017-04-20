@@ -15,7 +15,7 @@ function drawPhotos(ctx, { image, magnification, zoom = 100 }) {
   const widthDiff = (imageInfos.width * magnification - width) / 2;
   const heightDiff = (imageInfos.height * magnification - height) / 2;
 
-  ctx.setFillStyle('#fff');
+  ctx.setFillStyle('white');
 
   ctx.fillRect(
     0,
