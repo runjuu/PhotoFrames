@@ -45,8 +45,8 @@ Page({
       .then((path) => {
         previewImage({ current: path });
         canSelectImage = true;
+        wx.hideLoading();
       });
-    wx.hideLoading();
   },
 
   zoom({ detail: { value: zoom } }) {

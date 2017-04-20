@@ -16,7 +16,13 @@ function drawPhotos(ctx, { image, magnification, zoom = 100 }) {
   const heightDiff = (imageInfos.height * magnification - height) / 2;
 
   ctx.setFillStyle('#fff');
-  ctx.fillRect(0, 0, screenWidth * magnification, screenWidth * magnification);
+
+  ctx.fillRect(
+    0,
+    0,
+    screenWidth * magnification,
+    screenWidth * magnification,
+  );
 
   ctx.drawImage(
     image.path,
