@@ -31,6 +31,11 @@ Page({
   },
 
   previewImage() {
+    if (!params.image) {
+      this.selectImage();
+      return;
+    }
+
     wx.showLoading({ title:'处理中...', mask: true });
     canSelectImage = false;
     const { canvasToTempFilePath, previewImage } = getApp().methods;
