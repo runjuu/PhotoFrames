@@ -2,12 +2,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  flex-direction: column;
   height: 100%;
   width: 100%;
+  background: #000;
 }
 
-.frames {
+/* 图片显示区域 */
+
+.canvas {
+  margin-bottom: 128rpx
+}
+
+.export {
   position: absolute;
   left: 0;
   right: 0;
@@ -24,4 +31,17 @@
   width: 750rpx;
   height: 750rpx;
   background: #fff;
+}
+
+/* 底部操作区域 */
+.workbench {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%
+}
+
+.zoom_slider {
+  width: 80%;
 }

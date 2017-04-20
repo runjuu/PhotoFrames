@@ -6,7 +6,7 @@
     "backgroundTextStyle": "light",
     "backgroundColor": "#000",
     "navigationBarBackgroundColor": "#000",
-    "navigationBarTitleText": "PhotoFrames",
+    "navigationBarTitleText": "图框",
     "navigationBarTextStyle": "#fff"
   },
   "debug": true

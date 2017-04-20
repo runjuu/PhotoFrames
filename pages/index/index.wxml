@@ -1,16 +1,29 @@
-<!--index.wxml-->
 <view class="container">
   <view
     bindtap="selectImage"
     bindlongtap="previewImage"
+    class="canvas"
   >
+    <!-- 用于实际导出时的绘制 -->
     <canvas
-      class="frames"
-      canvas-id="frames"
+      class="export"
+      canvas-id="export"
     />
+    <!-- 用作预览 -->
     <canvas
       class="preview"
       canvas-id="preview"
+    />
+  </view>
+  <view class="workbench">
+    <!-- 图片缩放滑块 -->
+    <slider
+      class="zoom_slider"
+      bindchange="zoom"
+      backgroundColor="#000"
+      min="70"
+      value="100"
+      activeColor="#fff"
     />
   </view>
 </view>

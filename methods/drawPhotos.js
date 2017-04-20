@@ -1,17 +1,33 @@
-function drawPhotos(ctx, { image, systemInfo, magnification = 1 }) {
-  const {
-    utils: { filterImage  },
-  } = getApp();
-  const { width, height } = filterImage({ image, systemInfo });
+const systemInfo = wx.getSystemInfoSync();
 
-  if (image.width > image.height) {
-    const topOffset = ((systemInfo.screenWidth - height) / 2) * magnification;
-    ctx.drawImage(image.path, 0, topOffset, width * magnification, height * magnification);
-  } else {
-    const leftOffset = ((systemInfo.screenWidth - width) / 2) * magnification;
-    ctx.drawImage(image.path, leftOffset, 0, width * magnification, height * magnification);
-  }
+function drawPhotos(ctx, { image, magnification, zoom = 100 }) {
+  const { filterImage } = getApp().utils;
 
+  const imageInfos = filterImage({ image, systemInfo });
+  const scale = zoom / 100;
+
+
+  const left = image.width < image.height ? ((systemInfo.screenWidth - imageInfos.width) / 2) * magnification : 0;
+  const top = image.width > image.height ? ((systemInfo.screenWidth - imageInfos.height) / 2) * magnification : 0;
+  const width = imageInfos.width * magnification * scale;
+  const height = imageInfos.height * magnification * scale;
+  const widthDiff = (imageInfos.width * magnification - width) / 2;
+  const heightDiff = (imageInfos.height * magnification - height) / 2;
+
+  console.log(
+    left + widthDiff,
+    top + heightDiff,
+    width,
+    height,
+  );
+
+  ctx.drawImage(
+    image.path,
+    left + widthDiff,
+    top + heightDiff,
+    width,
+    height,
+  );
   ctx.draw();
 }
 
