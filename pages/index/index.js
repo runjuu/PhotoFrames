@@ -1,6 +1,8 @@
 const params = {};
-let canSelectImage = true;
-function drawPhotos(which) {
+let canSelectImage = false;
+
+function drawPhotos(which, showToast) {
+  if (showToast !== false) wx.showToast({ title: '处理中...', icon: 'loading', duration: 10000, mask: true });
   getApp().methods.drawPhotos(
     wx.createCanvasContext(which),
     Object.assign({}, params, which === 'preview' ? { magnification: 1 } : {}),
@@ -9,30 +11,33 @@ function drawPhotos(which) {
 
 Page({
 
-  data: {
-  },
-
   onReady() {
     const { magnification } = getApp();
     Object.assign(params, { magnification });
+
+    canSelectImage = true;
+    wx.showToast({ title: '点击，选择图片', icon: 'success', duration: 1000 });
   },
 
   selectImage() {
     if (!canSelectImage) return;
-    const { chooseImage } = getApp().methods;
-    chooseImage()
+
+    getApp().methods.chooseImage()
       .then((image) => {
         Object.assign(params, { image });
         drawPhotos('preview');
       })
-      .then(() => { wx.showToast({ title: '长按可预览图片', icon: 'success', duration: 1500 }); });
+      .then(() => {
+        wx.showToast({ title: '长按，预览图片', icon: 'success', duration: 1000 });
+      });
   },
 
   previewImage() {
     canSelectImage = false;
-    wx.showToast({ title: '处理中...', icon: 'loading', duration: 10000, mask: true });
-    drawPhotos('export');
+
     const { canvasToTempFilePath, previewImage } = getApp().methods;
+
+    drawPhotos('export');
     canvasToTempFilePath('export')
       .then((path) => {
         previewImage({ current: path });
@@ -42,7 +47,7 @@ Page({
 
   zoom({ detail: { value: zoom } }) {
     Object.assign(params, { zoom });
-    if (params.image) drawPhotos('preview');
+    if (params.image) drawPhotos('preview', false);
   },
 
 });

@@ -8,6 +8,5 @@
     "navigationBarBackgroundColor": "#000",
     "navigationBarTitleText": "图框",
     "navigationBarTextStyle": "#fff"
-  },
-  "debug": true
+  }
 }
