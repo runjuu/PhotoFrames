@@ -3,10 +3,8 @@
     "pages/index/index"
   ],
   "window":{
-    "backgroundTextStyle": "light",
-    "backgroundColor": "#000",
+    "backgroundColor": "#fff",
     "navigationBarBackgroundColor": "#000",
-    "navigationBarTitleText": "图框",
-    "navigationBarTextStyle": "#fff"
+    "navigationBarTitleText": "图框"
   }
 }
