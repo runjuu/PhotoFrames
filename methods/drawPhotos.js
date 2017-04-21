@@ -7,7 +7,6 @@ function drawPhotos(ctx, { image, magnification, zoom = 100 }) {
   const imageInfos = filterImage({ image, systemInfo });
   const scale = zoom / 100;
 
-
   const left = image.width < image.height ? ((screenWidth - imageInfos.width) / 2) * magnification : 0;
   const top = image.width > image.height ? ((screenWidth - imageInfos.height) / 2) * magnification : 0;
   const width = imageInfos.width * magnification * scale;

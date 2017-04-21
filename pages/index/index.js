@@ -1,5 +1,8 @@
-const params = {};
 let canSelectImage = false;
+
+const params = {
+  zoom: Number(wx.getStorageSync('zoom')) || 90,
+};
 
 function drawPhotos(which, showToast) {
   getApp().methods.drawPhotos(
@@ -10,6 +13,11 @@ function drawPhotos(which, showToast) {
 
 Page({
 
+  data: {
+    zoom: params.zoom,
+    hasNotImage: true,
+  },
+
   onReady() {
     const { magnification } = getApp();
     Object.assign(params, { magnification });
@@ -19,7 +27,6 @@ Page({
 
   selectImage() {
     if (!canSelectImage) return;
-
     getApp().methods.chooseImage()
       .then((image) => {
         Object.assign(params, { image });
@@ -27,6 +34,7 @@ Page({
       })
       .then(() => {
         wx.showToast({ title: '长按，预览图片', icon: 'success', duration: 1000 });
+        this.setData({ hasNotImage: false });
       });
   },
 
@@ -51,6 +59,7 @@ Page({
 
   zoom({ detail: { value: zoom } }) {
     Object.assign(params, { zoom });
+    wx.setStorageSync('zoom', zoom);
     if (params.image) drawPhotos('preview');
   },
 

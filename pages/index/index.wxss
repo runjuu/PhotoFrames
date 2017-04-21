@@ -54,4 +54,11 @@
 
 .zoom_slider {
   width: 80%;
+  color: red;
+  transition: opacity .3s;
+}
+
+.zoom_slider[data-status="hide"] {
+  opacity: .5;
+  pointer-events: none;
 }

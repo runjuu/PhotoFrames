@@ -20,11 +20,13 @@
     <!-- 图片缩放滑块 -->
     <slider
       class="zoom_slider"
-      bindchange="zoom"
-      backgroundColor="#000"
-      min="70"
-      value="100"
       activeColor="#fff"
+      backgroundColor="#1a1a1a"
+      min="50"
+      value="{{ zoom }}"
+      bindchange="zoom"
+      data-status="{{ hasNotImage ? 'hide' : 'show' }}"
+      show-value
     />
   </view>
 </view>
