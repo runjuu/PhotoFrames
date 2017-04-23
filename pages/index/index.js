@@ -4,10 +4,13 @@ const params = {
   zoom: Number(wx.getStorageSync('zoom')) || 90,
 };
 
-function drawPhotos(which, showToast) {
+function drawPhotos(which, canvasWidth) {
   getApp().methods.drawPhotos(
     wx.createCanvasContext(which),
-    Object.assign({}, params, which === 'preview' ? { magnification: 1 } : {}),
+    Object.assign({},
+      params,
+      { canvasWidth },
+    ),
   );
 }
 
@@ -15,14 +18,55 @@ Page({
 
   data: {
     zoom: params.zoom,
+    width: 100,
     hasNotImage: true,
   },
 
   onReady() {
-    const { magnification } = getApp();
-    Object.assign(params, { magnification });
     canSelectImage = true;
     wx.showToast({ title: '点击，选择图片', icon: 'success', duration: 1000 });
+  },
+
+  setExportWidth() {
+    return new Promise((resolve, fail) => {
+      const imgWidth = parseInt(this.data.width > params.image.width ? this.data.width : params.image.width);
+      const small = parseInt(imgWidth * (imgWidth > 3000 ? 0.1 : 0.2));
+      const medium = parseInt(imgWidth * (imgWidth > 3000 ? 0.2 : 0.5));
+      const large = parseInt(imgWidth * (imgWidth > 3000 ? 0.5 : 0.8));
+      wx.showActionSheet({
+        itemList: [
+          `Small (${small}x${small})`,
+          `Medium (${medium}x${medium})`,
+          `Large (${large}x${large})`,
+          `Actual Size (${imgWidth}x${imgWidth})`,
+        ],
+        success: ({ tapIndex }) => {
+          let width;
+
+          switch (tapIndex) {
+            case 0:
+              width = small;
+              break;
+            case 1:
+              width = medium;
+              break;
+            case 2:
+              width = large;
+              break;
+            case 3:
+              width = imgWidth;
+              break;
+            default:
+              width = medium;
+              break;
+          }
+
+          this.setData({ width });
+          resolve(width);
+        },
+        fail,
+      });
+    });
   },
 
   selectImage() {
@@ -38,22 +82,30 @@ Page({
       });
   },
 
-  previewImage() {
+  exportImage() {
     if (!params.image) {
       this.selectImage();
       return;
     }
-
-    wx.showLoading({ title:'处理中...', mask: true });
     canSelectImage = false;
-    const { canvasToTempFilePath, previewImage } = getApp().methods;
+    this.setExportWidth()
+      .then((width) => {
+        wx.showLoading({ title:`处理中...`, mask: true });
+        const { canvasToTempFilePath, previewImage } = getApp().methods;
 
-    drawPhotos('export');
-    canvasToTempFilePath('export')
-      .then((path) => {
-        previewImage({ current: path });
+        // 
+        setTimeout(() => {
+          drawPhotos('export', width);
+          canvasToTempFilePath('export')
+            .then((path) => {
+              previewImage({ current: path });
+              canSelectImage = true;
+              wx.hideLoading();
+            });
+        }, 1000);
+      })
+      .catch(() => {
         canSelectImage = true;
-        wx.hideLoading();
       });
   },
 

@@ -2,11 +2,12 @@
 <view class="container">
   <view
     bindtap="selectImage"
-    bindlongtap="previewImage"
+    bindlongtap="exportImage"
     class="canvas"
   >
     <!-- 用于实际导出时的绘制 -->
     <canvas
+      style="width: {{ width }}px; height: {{ width }}px;"
       class="export"
       canvas-id="export"
     />

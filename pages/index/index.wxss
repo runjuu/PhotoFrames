@@ -29,8 +29,8 @@
   left: 0;
   right: 0;
   flex: initial;
-  width: 3750rpx;
-  height: 3750rpx;
+  width: 100px;
+  height: 100px;
   background: #fff;
   transform: translate(-100%, -100%);
   pointer-events: none

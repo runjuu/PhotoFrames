@@ -1,7 +1,5 @@
-function filterImage({ image, systemInfo }) {
-  const { screenWidth } = systemInfo;
-
-  const ratio = image.width > image.height ? (screenWidth / image.width) : (screenWidth / image.height);
+function filterImage({ image, canvasWidth }) {
+  const ratio = image.width > image.height ? (canvasWidth / image.width) : (canvasWidth / image.height);
 
   const width = image.width * ratio;
   const height = image.height * ratio;

@@ -1,26 +1,25 @@
 const systemInfo = wx.getSystemInfoSync();
 const { screenWidth } = systemInfo;
 
-function drawPhotos(ctx, { image, magnification, zoom = 100 }) {
+function drawPhotos(ctx, { image, zoom = 100, canvasWidth = screenWidth }) {
   const { filterImage } = getApp().utils;
-
-  const imageInfos = filterImage({ image, systemInfo });
+  const imageInfos = filterImage({ image, canvasWidth });
   const scale = zoom / 100;
 
-  const left = image.width < image.height ? ((screenWidth - imageInfos.width) / 2) * magnification : 0;
-  const top = image.width > image.height ? ((screenWidth - imageInfos.height) / 2) * magnification : 0;
-  const width = imageInfos.width * magnification * scale;
-  const height = imageInfos.height * magnification * scale;
-  const widthDiff = (imageInfos.width * magnification - width) / 2;
-  const heightDiff = (imageInfos.height * magnification - height) / 2;
+  const left = image.width < image.height ? (canvasWidth - imageInfos.width) / 2 : 0;
+  const top = image.width > image.height ? (canvasWidth - imageInfos.height) / 2 : 0;
+  const width = imageInfos.width * scale;
+  const height = imageInfos.height * scale;
+  const widthDiff = (imageInfos.width - width) / 2;
+  const heightDiff = (imageInfos.height - height) / 2;
 
   ctx.setFillStyle('white');
 
   ctx.fillRect(
     0,
     0,
-    screenWidth * magnification,
-    screenWidth * magnification,
+    canvasWidth,
+    canvasWidth,
   );
 
   ctx.drawImage(
