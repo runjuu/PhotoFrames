@@ -29,7 +29,7 @@ Page({
 
   setExportWidth() {
     return new Promise((resolve, fail) => {
-      const imgWidth = parseInt(this.data.width > params.image.width ? this.data.width : params.image.width, 10);
+      const imgWidth = parseInt(params.image.height > params.image.width ? params.image.height : params.image.width, 10);
 
       const small = 720;
       const medium = 1080;
@@ -39,14 +39,14 @@ Page({
         `小 (${small}x${small})`,
         `中 (${medium}x${medium})`,
         `大 (${large}x${large})`,
+        `原图 (${imgWidth}x${imgWidth})`,
       ];
-
-      if (large <= imgWidth && imgWidth <= 3000) itemList.push(`原图 (${imgWidth}x${imgWidth})`);
 
       wx.showActionSheet({
         itemList,
         success: ({ tapIndex }) => {
           let width;
+          const scale = params.zoom / 100;
 
           switch (tapIndex) {
             case 0:
@@ -59,13 +59,12 @@ Page({
               width = large;
               break;
             case 3:
-              width = imgWidth;
+              width = parseInt(imgWidth / scale, 10);
               break;
             default:
               width = medium;
               break;
           }
-
           this.setData({ width });
           resolve(width);
         },
