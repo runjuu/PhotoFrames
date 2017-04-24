@@ -33,13 +33,18 @@ Page({
       const small = parseInt(imgWidth * (imgWidth > 3000 ? 0.1 : 0.2));
       const medium = parseInt(imgWidth * (imgWidth > 3000 ? 0.2 : 0.5));
       const large = parseInt(imgWidth * (imgWidth > 3000 ? 0.5 : 0.8));
+
+      const itemList = [
+        `小 (${small}x${small})`,
+        `中 (${medium}x${medium})`,
+        `大 (${large}x${large})`,
+      ];
+
+      if (imgWidth <= 3000) itemList.push(`原图 (${imgWidth}x${imgWidth})`);
+
       wx.showActionSheet({
-        itemList: [
-          `Small (${small}x${small})`,
-          `Medium (${medium}x${medium})`,
-          `Large (${large}x${large})`,
-          `Actual Size (${imgWidth}x${imgWidth})`,
-        ],
+        itemList,
+        fail,
         success: ({ tapIndex }) => {
           let width;
 
@@ -64,7 +69,6 @@ Page({
           this.setData({ width });
           resolve(width);
         },
-        fail,
       });
     });
   },
