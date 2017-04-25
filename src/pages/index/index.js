@@ -7,19 +7,16 @@ const params = {
 function drawPhotos(which, canvasWidth) {
   getApp().methods.drawPhotos(
     wx.createCanvasContext(which),
-    Object.assign({},
-      params,
-      { canvasWidth },
-    ),
+    Object.assign({ canvasWidth }, params),
   );
 }
 
 Page({
 
   data: {
-    zoom: params.zoom,
     width: 100,
     hasNotImage: true,
+    zoom: params.zoom,
   },
 
   onReady() {
@@ -90,14 +87,15 @@ Page({
     if (!params.image) {
       this.selectImage();
       return;
+    } else {
+      canSelectImage = false;
     }
-    canSelectImage = false;
+
     this.setExportWidth()
       .then((width) => {
         wx.showLoading({ title:`处理中...`, mask: true });
         const { canvasToTempFilePath, previewImage } = getApp().methods;
 
-        // 
         setTimeout(() => {
           drawPhotos('export', width);
           canvasToTempFilePath('export')
@@ -106,7 +104,7 @@ Page({
               canSelectImage = true;
               wx.hideLoading();
             });
-        }, 1000);
+        }, 600);
       })
       .catch(() => {
         canSelectImage = true;
@@ -116,6 +114,7 @@ Page({
   zoom({ detail: { value: zoom } }) {
     Object.assign(params, { zoom });
     wx.setStorageSync('zoom', zoom);
+
     if (params.image) drawPhotos('preview');
   },
 
